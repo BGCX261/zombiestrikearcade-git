@@ -53,6 +53,8 @@ private:
 	//SGD::HTexture background = SGD::INVALID_HANDLE;
 
 	SGD::HAudio themeSong = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hinstruct = SGD::INVALID_HANDLE;
+
 	
 
 

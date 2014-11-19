@@ -353,60 +353,15 @@
 	// Align text based on window width
 	float width = Game::GetInstance()->GetScreenWidth();
 	float height = Game::GetInstance()->GetScreenHeight();
-	float scale = 1.25f;
+	float scale = 1.0f;
 												
 
 
 	// Display the game title centered at 4x scale
-	pFont->Draw("PAUSED", { (width - (9 * 32 * 3.0f)) / 2, (26.0F * 3.0F) }, 3.0f, { 255, 255, 255 });
+	pFont->Draw("PAUSED", { (width - (9 * 32 * 2.0f)) / 2, (26.0F * 3.0F) }, 2.0f, { 255, 255, 255 });
 
 
-	/*
-	if (m_nCursor == 0)
-	{
-		pFont->Draw("Resume", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 100.0f }, scale, { 255,255,255 });
-		pFont->Draw("Controls", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 200.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Options", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 300.0f }, scale, { 255, 0, 0 });
-
-		if (HTPGameState::GetInstance()->GetChoiceScreen() == false)
-			pFont->Draw("Start Game", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-		else
-			pFont->Draw("Quit to Menu", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-	}
-	else if (m_nCursor == 1)
-	{
-		pFont->Draw("Resume", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 100.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Controls", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 200.0f }, scale, { 255, 255, 255 });
-		pFont->Draw("Options", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 300.0f }, scale, { 255, 0, 0 });
-
-		if (HTPGameState::GetInstance()->GetChoiceScreen() == false)
-			pFont->Draw("Start Game", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-		else
-			pFont->Draw("Quit to Menu", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-	}
-	else if (m_nCursor == 2)
-	{
-		pFont->Draw("Resume", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 100.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Controls", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 200.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Options", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 300.0f }, scale, { 255, 255, 255 });
-
-		if (HTPGameState::GetInstance()->GetChoiceScreen() == false)
-			pFont->Draw("Start Game", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-		else
-			pFont->Draw("Quit to Menu", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-	}
-	else if (m_nCursor == 3)
-	{
-		pFont->Draw("Resume", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 100.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Controls", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 200.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Options", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 300.0f }, scale, { 255, 0, 0 });
-
-		if (HTPGameState::GetInstance()->GetChoiceScreen() == false)
-			pFont->Draw("Start Game", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 255, 255 });
-		else
-			pFont->Draw("Quit to Menu", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 255, 255 });
-	}
-	*/
+	
 
 	// Draw the reticle
 	SGD::Point	retpos = SGD::InputManager::GetInstance()->GetMousePosition();
@@ -424,7 +379,7 @@
 				? SGD::Color(255, 255, 255)
 				: SGD::Color(255, 0, 0);
 
-			float y_offset = (100.0f * i) + 100.0f;
+			float y_offset = (75.0f * i) + 35.0f;
 			pFont->Draw(gameplaychoices[i].c_str(), { (width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + y_offset }, scale, color);
 		}
 	}
@@ -440,7 +395,8 @@
 				? SGD::Color(255, 255, 255)
 				: SGD::Color(255, 0, 0);
 
-			float y_offset = (100.0f * i) + 100.0f;
+			float y_offset = (75.0f * i) + 35.0f;
+
 			pFont->Draw(tutorialchoices[i].c_str(), { (width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + y_offset }, scale, color);
 		}
 	}

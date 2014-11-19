@@ -43,6 +43,7 @@
 	// (commented out to keep the last cursor position)
 	//m_nCursor = 0;
 	
+	m_hinstruct = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/MenuImages/ArcadeControlsIcons.png");
 
 	
 	std::wifstream fin;
@@ -78,7 +79,8 @@
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
-
+	
+	pGraphics->UnloadTexture(m_hinstruct);
 
 	std::wofstream fout; 
 	fout.open("resource/config/highscores.txt");
@@ -156,6 +158,11 @@
 		spacing += 5;
 		count++;
 	}
+
+	// Display skip input
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(m_hinstruct, { Game::GetInstance()->GetScreenWidth() * 0.45f, Game::GetInstance()->GetScreenHeight() * 0.90f }, { 30.0f, 32.0f, 64.0f, 55.0f }, 0.0f, {}, {}, { 2.0f, 2.0f });
+	pFont->Draw("Press ", { Game::GetInstance()->GetScreenWidth() * 0.35f, Game::GetInstance()->GetScreenHeight() * 0.9f }, 1.0f, { 255, 255, 255 });
+	pFont->Draw(" to Skip ", { Game::GetInstance()->GetScreenWidth() * 0.55f, Game::GetInstance()->GetScreenHeight() * 0.9f }, 1.0f, { 255, 255, 255 });
 	
 
 

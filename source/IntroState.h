@@ -44,8 +44,10 @@ private:
 	// Assets
 	SGD::HTexture	m_hBackgroundImage	= SGD::INVALID_HANDLE;
 	SGD::HTexture	m_hStaticImage		= SGD::INVALID_HANDLE;
-	SGD::HAudio		m_hBackgroundMusic	= SGD::INVALID_HANDLE;
+	SGD::HTexture	m_hinstruct = SGD::INVALID_HANDLE;
 
+	SGD::HAudio		m_hBackgroundMusic	= SGD::INVALID_HANDLE;
+	
 	SGD::HAudio		m_hEmergency		= SGD::INVALID_HANDLE;
 
 	Timer IntroTimer;
