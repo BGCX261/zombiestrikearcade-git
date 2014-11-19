@@ -62,6 +62,7 @@ private:
 	bool	clicked			= false;
 	bool	selected		= false;
 	bool	m_bFromMainMenu = false;
+	bool	isJSmoved		= false;
 
 
 	/**********************************************************/

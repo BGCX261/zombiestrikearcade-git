@@ -104,7 +104,7 @@
 
 	SGD::Point mousePos = pInput->GetMousePosition();
 	// Press Escape to quit
-	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 2) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 6) == true)
 	{
 		SGD::Event msg("UNPAUSE");
 		msg.SendEventNow();
@@ -112,10 +112,10 @@
 
 		return true;
 	}
-	if (pInput->GetMouseMovement() != SGD::Vector() || (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0))
-	{
-		
 
+
+	if (pInput->GetMouseMovement() != SGD::Vector() /*|| (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0)*/)
+	{
 		if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point((width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + (100.0f * 0) + 100.0f), SGD::Size(256, 64))))
 			m_nCursor = 0;
 		else if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point((width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + (100.0f * 1) + 100.0f), SGD::Size(256, 64))))
@@ -124,16 +124,15 @@
 			m_nCursor = 2;
 		else if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point((width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + (100.0f * 3) + 100.0f), SGD::Size(256, 64))))
 			m_nCursor = 3;
+
 		if (HTPGameState::GetInstance()->GetIsCurrState() == true)
 		{
 			if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point((width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + (100.0f * 4) + 100.0f), SGD::Size(256, 64))))
 				m_nCursor = 4;
-
 		}
-		
-
 	}
 
+	/*
 	if (HTPGameState::GetInstance()->GetIsCurrState() == false)
 	{
 		if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true)
@@ -141,23 +140,63 @@
 		else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true)
 			m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
 	}
-	else if (HTPGameState::GetInstance()->GetIsCurrState() == false)
+	else
+	*/
+	if (HTPGameState::GetInstance()->GetIsCurrState() == false)
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true)
+		if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true || pInput->IsButtonPressed(0, 0) == true)
 			m_nCursor = m_nCursor + 1 < NUM_CHOICES ? m_nCursor + 1 : 0;
-		else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true)
+		else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true || pInput->IsButtonPressed(0, 1) == true)
 			m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
+
+
+		// Joystick input
+		if (pInput->GetLeftJoystick(0).y < 0)
+		{
+			if (isJSmoved == false)
+				m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
+			isJSmoved = true;
+		}
+		else if (pInput->GetLeftJoystick(0).y > 0)
+		{
+			if (isJSmoved == false)
+				m_nCursor = m_nCursor + 1 < NUM_CHOICES ? m_nCursor + 1 : 0;
+			isJSmoved = true;
+		}
+		else
+		{
+			isJSmoved = false;
+		}
 	}
 	else
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true)
+		if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true || pInput->IsButtonPressed(0, 0) == true)
 			m_nCursor = m_nCursor + 1 < (NUM_CHOICES + 1) ? m_nCursor + 1 : 0;
-		else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true)
+		else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true || pInput->IsButtonPressed(0, 1) == true)
 			m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : (NUM_CHOICES + 1) - 1;
+
+
+		// Joystick input
+		if (pInput->GetLeftJoystick(0).y < 0)
+		{
+			if (isJSmoved == false)
+				m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : (NUM_CHOICES + 1) - 1;
+			isJSmoved = true;
+		}
+		else if (pInput->GetLeftJoystick(0).y > 0)
+		{
+			if (isJSmoved == false)
+				m_nCursor = m_nCursor + 1 < (NUM_CHOICES + 1) ? m_nCursor + 1 : 0;
+			isJSmoved = true;
+		}
+		else
+		{
+			isJSmoved = false;
+		}
 	}
 
 
-	if (pInput->IsKeyPressed(SGD::Key::Enter) == true || pInput->IsButtonPressed(0, 1) == true || pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Enter) == true || pInput->IsButtonPressed(0, 3) == true || pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
 	{
 		/*
 		switch (m_nCursor)
@@ -209,7 +248,6 @@
 			break;
 		}
 		*/
-
 
 		if (HTPGameState::GetInstance()->GetChoiceScreen() == true)
 		{
@@ -353,60 +391,15 @@
 	// Align text based on window width
 	float width = Game::GetInstance()->GetScreenWidth();
 	float height = Game::GetInstance()->GetScreenHeight();
-	float scale = 1.25f;
+	float scale = 1.0f;
 												
 
 
 	// Display the game title centered at 4x scale
-	pFont->Draw("PAUSED", { (width - (9 * 32 * 3.0f)) / 2, (26.0F * 3.0F) }, 3.0f, { 255, 255, 255 });
+	pFont->Draw("PAUSED", { (width - (9 * 32 * 2.0f)) / 2, (26.0F * 3.0F) }, 2.0f, { 255, 255, 255 });
 
 
-	/*
-	if (m_nCursor == 0)
-	{
-		pFont->Draw("Resume", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 100.0f }, scale, { 255,255,255 });
-		pFont->Draw("Controls", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 200.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Options", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 300.0f }, scale, { 255, 0, 0 });
-
-		if (HTPGameState::GetInstance()->GetChoiceScreen() == false)
-			pFont->Draw("Start Game", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-		else
-			pFont->Draw("Quit to Menu", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-	}
-	else if (m_nCursor == 1)
-	{
-		pFont->Draw("Resume", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 100.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Controls", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 200.0f }, scale, { 255, 255, 255 });
-		pFont->Draw("Options", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 300.0f }, scale, { 255, 0, 0 });
-
-		if (HTPGameState::GetInstance()->GetChoiceScreen() == false)
-			pFont->Draw("Start Game", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-		else
-			pFont->Draw("Quit to Menu", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-	}
-	else if (m_nCursor == 2)
-	{
-		pFont->Draw("Resume", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 100.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Controls", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 200.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Options", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 300.0f }, scale, { 255, 255, 255 });
-
-		if (HTPGameState::GetInstance()->GetChoiceScreen() == false)
-			pFont->Draw("Start Game", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-		else
-			pFont->Draw("Quit to Menu", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 0, 0 });
-	}
-	else if (m_nCursor == 3)
-	{
-		pFont->Draw("Resume", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 100.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Controls", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 200.0f }, scale, { 255, 0, 0 });
-		pFont->Draw("Options", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 300.0f }, scale, { 255, 0, 0 });
-
-		if (HTPGameState::GetInstance()->GetChoiceScreen() == false)
-			pFont->Draw("Start Game", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 255, 255 });
-		else
-			pFont->Draw("Quit to Menu", { (width*0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + 400.0f }, scale, { 255, 255, 255 });
-	}
-	*/
+	
 
 	// Draw the reticle
 	SGD::Point	retpos = SGD::InputManager::GetInstance()->GetMousePosition();
@@ -424,7 +417,7 @@
 				? SGD::Color(255, 255, 255)
 				: SGD::Color(255, 0, 0);
 
-			float y_offset = (100.0f * i) + 100.0f;
+			float y_offset = (75.0f * i) + 35.0f;
 			pFont->Draw(gameplaychoices[i].c_str(), { (width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + y_offset }, scale, color);
 		}
 	}
@@ -440,7 +433,8 @@
 				? SGD::Color(255, 255, 255)
 				: SGD::Color(255, 0, 0);
 
-			float y_offset = (100.0f * i) + 100.0f;
+			float y_offset = (75.0f * i) + 35.0f;
+
 			pFont->Draw(tutorialchoices[i].c_str(), { (width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + y_offset }, scale, color);
 		}
 	}

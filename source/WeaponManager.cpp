@@ -238,7 +238,7 @@ void WeaponManager::Input()
 	SGD::InputManager * pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
-	if (pInput->IsKeyPressed(SGD::Key::Q) == true || pInput->IsButtonPressed(0, 4) == true || mousewheel < 0)
+	if (pInput->IsKeyPressed(SGD::Key::Q) == true /*|| pInput->IsButtonPressed(0, 4) == true*/ || mousewheel < 0 || pInput->IsKeyPressed(SGD::Key::MouseLeft) == true)
 	{
 		curIndex--;
 
@@ -266,7 +266,7 @@ void WeaponManager::Input()
 		mousewheel = 0;
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::E) == true || pInput->IsButtonPressed(0, 5) == true || mousewheel > 0)
+	if (pInput->IsKeyPressed(SGD::Key::E) == true /*|| pInput->IsButtonPressed(0, 5) == true*/ || mousewheel > 0 || pInput->IsKeyPressed(SGD::Key::MouseLeft) == true)
 	{
 		curIndex++;
 

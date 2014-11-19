@@ -31,5 +31,6 @@ private:
 
 
 	int m_nCursor = 0;
+	bool isJSmoved = false;
 
 };

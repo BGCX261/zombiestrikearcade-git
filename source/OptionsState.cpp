@@ -76,25 +76,24 @@
 
 	// Press Escape to quit
 	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || (m_nCursor == (NUM_CHOICES - 1) && pInput->IsKeyPressed(SGD::Key::Enter) == true) ||
-		pInput->IsButtonPressed(0, 2) == true || (m_nCursor == (NUM_CHOICES - 1) && pInput->IsButtonReleased(0, 1) == true))
+		pInput->IsButtonPressed(0, 6) == true || (m_nCursor == (NUM_CHOICES - 1) && pInput->IsButtonReleased(0, 3) == true))
 		Game::GetInstance()->RemoveState();
 
 
-			mousePos = pInput->GetMousePosition();
+	mousePos = pInput->GetMousePosition();
 
-	if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true || pInput->IsButtonPressed(0, 0) == true)
 		m_nCursor = m_nCursor + 1 < NUM_CHOICES ? m_nCursor + 1 : 0;
-	else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true)
+	else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true || pInput->IsButtonPressed(0, 1) == true)
 		m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
 
+	/*
 		if ((pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0)
 			&& (pInput->GetLeftJoystick(0).x <= 1.0f
 			&& pInput->GetLeftJoystick(0).y <= 1.0f
 			&& pInput->GetLeftJoystick(0).x >= -1.0f
 			&& pInput->GetLeftJoystick(0).y >= -1.0f))
 		{
-
-
 			SGD::Vector	joystick = pInput->GetLeftJoystick(0);
 			float		stickmin = 0.250f;
 			float		mousevel = 1.0f;
@@ -122,13 +121,28 @@
 				pInput->SetMousePosition(mousePos);
 		}
 
-		mousePos = pInput->GetMousePosition();
+	mousePos = pInput->GetMousePosition();
+	*/
 
-	
 
-	
+	// Joystick input
+	if (pInput->GetLeftJoystick(0).y < 0)
+	{
+		if (isJSmoved == false)
+			m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
+		isJSmoved = true;
+	}
+	else if (pInput->GetLeftJoystick(0).y > 0)
+	{
+		if (isJSmoved == false)
+			m_nCursor = m_nCursor + 1 < NUM_CHOICES ? m_nCursor + 1 : 0;
+		isJSmoved = true;
+	}
+	else
+	{
+		isJSmoved = false;
+	}
 
-	
 
 	int volumes[2];
 	volumes[0] = pAudio->GetMasterVolume(SGD::AudioGroup::Music);
@@ -153,7 +167,6 @@
 		if (pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
 			volumes[0] += volOffset;
 		m_nCursor = 0;
-
 	}
 	
 	if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point(left_start + 475.0F, 300.0F), SGD::Size(64, 64))))
@@ -167,10 +180,9 @@
 	{
 		if (pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
 			volumes[1] += volOffset;
-	
 		m_nCursor = 1;
-
 	}
+
 	if ((mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point(left_start + 475.0F, 400.0F), SGD::Size(192, 32)))))
 	{
 		if (pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
@@ -178,9 +190,7 @@
 			m_bFullScreen = !m_bFullScreen;
 			pGraphics->Resize(SGD::Size(Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight()), m_bFullScreen);
 			pInput->SetMousePosition({ Game::GetInstance()->GetScreenWidth() * 0.5f, Game::GetInstance()->GetScreenHeight() * 0.5f });
-
 		}
-		
 		m_nCursor = 2;
 	}
 
@@ -188,7 +198,6 @@
 	{
 		if (pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
 			Game::GetInstance()->RemoveState();
-
 		m_nCursor = 3;
 	}
 
@@ -196,26 +205,27 @@
 	{
 	case 0: // Music
 		{
-				if (pInput->IsKeyPressed(SGD::Key::Right) == true || pInput->IsDPadPressed(0, SGD::DPad::Right) == true )
-				volumes[0] += volOffset;
-			else if (pInput->IsKeyPressed(SGD::Key::Left) == true || pInput->IsDPadPressed(0, SGD::DPad::Left) == true)
-				volumes[0] -= volOffset;
+				if (pInput->IsKeyPressed(SGD::Key::Right) == true || pInput->IsDPadPressed(0, SGD::DPad::Right) == true || pInput->IsButtonPressed(0, 1) == true)
+					volumes[0] += volOffset;
+				else if (pInput->IsKeyPressed(SGD::Key::Left) == true || pInput->IsDPadPressed(0, SGD::DPad::Left) == true || pInput->IsButtonPressed(0, 0) == true)
+					volumes[0] -= volOffset;
 		}
 		break;
 
 	case 1: // Sfx
 		{
-			if (pInput->IsKeyPressed(SGD::Key::Right) == true || pInput->IsDPadPressed(0, SGD::DPad::Right) == true)
-				volumes[1] += volOffset;
-			else if (pInput->IsKeyPressed(SGD::Key::Left) == true || pInput->IsDPadPressed(0, SGD::DPad::Left) == true)
-				volumes[1] -= volOffset;
+				if (pInput->IsKeyPressed(SGD::Key::Right) == true || pInput->IsDPadPressed(0, SGD::DPad::Right) == true || pInput->IsButtonPressed(0, 1) == true)
+					volumes[1] += volOffset;
+				else if (pInput->IsKeyPressed(SGD::Key::Left) == true || pInput->IsDPadPressed(0, SGD::DPad::Left) == true || pInput->IsButtonPressed(0, 0) == true)
+					volumes[1] -= volOffset;
 		}
 		break;
 
 	case 2: // full screen
 		{
 				if (pInput->IsKeyPressed(SGD::Key::Right) == true || pInput->IsKeyPressed(SGD::Key::Left) == true ||
-					pInput->IsDPadPressed(0, SGD::DPad::Right) == true || pInput->IsDPadPressed(0, SGD::DPad::Left) == true)
+					pInput->IsDPadPressed(0, SGD::DPad::Right) == true || pInput->IsDPadPressed(0, SGD::DPad::Left) == true ||
+					pInput->IsButtonPressed(0, 1) == true || pInput->IsButtonPressed(0, 0) == true)
 				{
 					m_bFullScreen = !m_bFullScreen;
 					pGraphics->Resize(SGD::Size(Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight()), m_bFullScreen);

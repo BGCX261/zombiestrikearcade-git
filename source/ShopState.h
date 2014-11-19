@@ -5,8 +5,8 @@
 #include "Timer.h"
 #include <vector>
 
-#define BUTTON_WIDTH 184.5f
-#define BUTTON_HEIGHT 40.5f
+#define BUTTON_WIDTH 126.5f
+#define BUTTON_HEIGHT 27.0f
 
 class BarbedWire;
 class LandMine;
@@ -86,7 +86,7 @@ private:
 
 	
 
-	SGD::Rectangle shotTab1 = { 350, 100, 350 + BUTTON_WIDTH, 127 };
+	SGD::Rectangle shotTab1 = { 200, 100, 200 + BUTTON_WIDTH, 127 };
 	SGD::Rectangle shotTab2 = { shotTab1.right, 100, shotTab1.right + BUTTON_WIDTH, 127 };
 	SGD::Rectangle shotTab3 = { shotTab2.right, 100, shotTab2.right + BUTTON_WIDTH, 127 };
 

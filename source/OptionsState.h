@@ -41,8 +41,9 @@ private:
 
 	/**********************************************************/
 	// Cursor Index
-	int				m_nCursor = 0;
-	bool			m_bFullScreen			= true;
+	int				m_nCursor		= 0;
+	bool			m_bFullScreen	= true;
+	bool			isJSmoved		= false;
 	SGD::Point mousePos = { 0, 0 };
 
 	/**********************************************************/

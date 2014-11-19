@@ -51,7 +51,7 @@
 
 
 	// Press Escape to quit
-	if (pInput->IsAnyKeyPressed() == true || pInput->IsButtonPressed(0,2) == true)
+	if (pInput->IsAnyKeyPressed() == true || pInput->IsButtonPressed(0, 6) == true)
 	{
 		Game::GetInstance()->RemoveState();
 		//Game::GetInstance()->AddState(MainMenuState::GetInstance());
@@ -93,20 +93,18 @@
 
 	// Display the title centered at 4x scale
 	//pFont->Draw("CREDITS", { (width - (7 * 32 * 3.0f)) / 2, 10 }, 3.0f, { 255, 255, 255 });
-	pFont->Draw("CREDITS", { (width - (7 * 32 * 3.0f)) / 2, starting_y - (32 * 3.0f) }, 3.0f, { 255, 255, 255 });
+	pFont->Draw("CREDITS", { (width - (7 * 32 * 3.0f)) / 2, starting_y - (32 * 3.0f) }, 2.0f, { 255, 255, 255 });
 
 
 	// Align text based on window width
 	float left_start		= width * 0.15f;
 	float y_offset			= 210.0f;
-	float scale				= 1.0f;
+	float scale				= 0.75f;
 	float newline_offset	= 31.0f;
 
-	if (SGD::InputManager::GetInstance()->IsControllerConnected(0) == true)
-		pFont->Draw("Press 2 to Skip", { width * 0.75f, height * 0.1f }, 1.0f, { 255, 0, 0 });
-	else
-		pFont->Draw("Press Any Key To Skip", { width * 0.75f, height * 0.1f }, 1.0f, { 255, 0, 0 });
-
+	
+		pFont->Draw("Press 6 to Skip", { width * 0.7f, height * 0.1f }, 1.0f, { 255, 0, 0 });
+	
 
 	// variables to use as a buffer for strings on the same line
 	// will be CONSTANTLY given new values based on: current line & string, etc....

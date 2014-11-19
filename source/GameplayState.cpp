@@ -294,7 +294,7 @@
 	/**********************************************************/
 	// Press Escape to enter Pause menu
 	/**********************************************************/
-	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 9) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 6) == true)
 	{
 		SGD::Event msg("PAUSE");
 		msg.SendEventNow();

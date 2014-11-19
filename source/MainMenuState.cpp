@@ -161,19 +161,19 @@
 
 
 	// Press Escape to quit
-	if (pInput->IsKeyPressed(SGD::Key::Escape) == true/* || pInput->IsButtonPressed(0, 2) == true */)
+	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 6) == true )
 		m_nCursor = MenuItems::EXIT;
 
 
 	// Input: keyboard & D-pad
-	if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsButtonPressed(0, 0) == true)
 	{
 		m_mPrevious = m_nCursor;
 		m_nCursor = m_nCursor + 1 < NUM_CHOICES ? m_nCursor + 1 : 0;
 		
 		pInput->SetMousePosition(selectonrects[m_nCursor].GetTopRight());
 	}
-	else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true)
+	else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true || pInput->IsButtonPressed(0, 1) == true)
 	{
 		m_mPrevious = m_nCursor;
 		m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
@@ -181,42 +181,28 @@
 		pInput->SetMousePosition(selectonrects[m_nCursor].GetTopRight());
 	}
 
-	// Input: L1 - Left Joystick
-	/*
-	if (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0)
+
+	// Joystick input
+	if (pInput->GetLeftJoystick(0).y < 0)
 	{
-		SGD::Point	mpoint = pInput->GetMousePosition();
-		SGD::Vector	joystick = pInput->GetLeftJoystick(0);
-		float		stickmin = 0.250f;
-		float		mousevel = 1.0f;
-
-
-		if (joystick.x > stickmin)
-			mpoint.x += mousevel;
-		else if (joystick.x < stickmin * -1.0f)
-			mpoint.x -= mousevel;
-
-		if (joystick.y > stickmin)
-			mpoint.y += mousevel;
-		else if (joystick.y < stickmin * -1.0f)
-			mpoint.y -= mousevel;
-
-		if (mpoint.x < 0.0F)
-			mpoint.x = 0.0F;
-		if (mpoint.y < 0.0F)
-			mpoint.y = 0.0F;
-		if (mpoint.x > Game::GetInstance()->GetScreenWidth())
-			mpoint.x = Game::GetInstance()->GetScreenWidth();
-		if (mpoint.y > Game::GetInstance()->GetScreenHeight())
-			mpoint.y = Game::GetInstance()->GetScreenHeight();
-
-		pInput->SetMousePosition(mpoint);
+		if (isJSmoved == false)
+			m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
+		isJSmoved = true;
 	}
-	*/
-	
+	else if (pInput->GetLeftJoystick(0).y > 0)
+	{
+		if (isJSmoved == false)
+			m_nCursor = m_nCursor + 1 < NUM_CHOICES ? m_nCursor + 1 : 0;
+		isJSmoved = true;
+	}
+	else
+	{
+		isJSmoved = false;
+	}
+
 
 	// Input: Mouse
-	if (pInput->GetMouseMovement() != SGD::Vector() || (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0))
+	if (pInput->GetMouseMovement() != SGD::Vector() /*|| (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0)*/)
 	{
 		SGD::Point mousepos = pInput->GetMousePosition();
 		bool collided = false;
@@ -251,7 +237,7 @@
 
 
 	// Selection
-	if (pInput->IsKeyPressed(SGD::Key::Enter) == true || (pInput->IsKeyReleased(SGD::Key::LButton) == true && selected == true) || pInput->IsButtonPressed(0, 1) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Enter) == true || (pInput->IsKeyReleased(SGD::Key::LButton) == true && selected == true) || pInput->IsButtonPressed(0, 3) == true)
 	{
 		if (pAudio->IsAudioPlaying(m_hMenuChangeSFX) == false)
 			pAudio->PlayAudio(m_hMenuChangeSFX, false);

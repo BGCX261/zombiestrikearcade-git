@@ -33,6 +33,11 @@ private:
 
 	SGD::HTexture	m_hReticleImage = SGD::INVALID_HANDLE;
 
+	SGD::HTexture arcadePlayerControls = SGD::INVALID_HANDLE;
+	SGD::HTexture arcadeMenuControls = SGD::INVALID_HANDLE;
+
+	SGD::HTexture	m_hinstruct = SGD::INVALID_HANDLE;
+
 
 };
 

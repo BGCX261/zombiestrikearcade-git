@@ -182,6 +182,7 @@ private:
 
 	int m_nCursor = 0;
 	int m_nCurPage = 1;
+	bool	isJSmoved = false;
 
 	string iTutorial[20];
 

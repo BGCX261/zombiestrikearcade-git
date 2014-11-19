@@ -63,9 +63,9 @@
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 
-	if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true || pInput->IsButtonPressed(0, 0) == true)
 		m_nCursor = m_nCursor + 1 < NUM_CHOICES ? m_nCursor + 1 : 0;
-	else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true)
+	else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true || pInput->IsButtonPressed(0, 1) == true)
 		m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
 
 	float width = Game::GetInstance()->GetScreenWidth();
@@ -104,17 +104,35 @@
 
 	SGD::Point mousePos = pInput->GetMousePosition();
 
-	if (pInput->GetMouseMovement() != SGD::Vector() || (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0))
+	if (pInput->GetMouseMovement() != SGD::Vector() /*|| (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0)*/)
 	{
 		if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point(width *0.5f - (3 * 32 * scale), (height * 0.5F) + 100.0f), SGD::Size(128, 64))))
 			m_nCursor = 0;
 		else if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point(width *0.5f - (3 * 32 * scale), (height * 0.5F) + 200.0f), SGD::Size(128, 64))))
 			m_nCursor = 1;
-
 	}
-		
 
-	if (pInput->IsKeyPressed(SGD::Key::Enter) == true || pInput->IsButtonPressed(0, 1) == true || pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
+
+	// Joystick input
+	if (pInput->GetLeftJoystick(0).y < 0)
+	{
+		if (isJSmoved == false)
+			m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
+		isJSmoved = true;
+	}
+	else if (pInput->GetLeftJoystick(0).y > 0)
+	{
+		if (isJSmoved == false)
+			m_nCursor = m_nCursor + 1 < NUM_CHOICES ? m_nCursor + 1 : 0;
+		isJSmoved = true;
+	}
+	else
+	{
+		isJSmoved = false;
+	}
+
+
+	if (pInput->IsKeyPressed(SGD::Key::Enter) == true || pInput->IsButtonPressed(0, 3) == true || pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
 	{
 		if (GameplayState::GetInstance()->GetGameMode() == true)
 		{
