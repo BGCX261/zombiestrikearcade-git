@@ -325,7 +325,7 @@ bool	ShopState::Input(void)
 		Game::GetInstance()->RemoveState();
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::Q) == true || pInput->IsButtonPressed(0, 4) == true)
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft) == true)
 	{
 		currPage--;
 		if (currPage < 0)
@@ -333,7 +333,8 @@ bool	ShopState::Input(void)
 		currTab = 0;
 		buttonnum = 0;
 	}
-	if (pInput->IsKeyPressed(SGD::Key::E) == true || pInput->IsButtonPressed(0, 5) == true)
+
+	if (pInput->IsKeyPressed(SGD::Key::MouseRight) == true)
 	{
 		currPage++;
 		if (currPage > 5)
@@ -341,12 +342,12 @@ bool	ShopState::Input(void)
 		currTab = 0;
 		buttonnum = 0;
 	}
-	if (pInput->IsKeyPressed(SGD::Key::RightArrow) == true || pInput->IsDPadPressed(0, SGD::DPad::Right) == true || pInput->IsKeyPressed(SGD::Key::D) == true)
+	if (pInput->IsButtonPressed(0, 5) == true)
 	{
 		currTab++;
 		buttonnum = 0;
 	}
-	if (pInput->IsKeyPressed(SGD::Key::LeftArrow) == true || pInput->IsDPadPressed(0, SGD::DPad::Left) == true || pInput->IsKeyPressed(SGD::Key::A) == true)
+	if (pInput->IsButtonPressed(0, 4) == true)
 	{
 		currTab--;
 		buttonnum = 0;
@@ -355,41 +356,9 @@ bool	ShopState::Input(void)
 	if (pInput->IsControllerConnected(0) == true)
 	{
 		ControllerSelectionCheck();
-		/*
-		if (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0)
-		{
-		SGD::Point	mpoint = pInput->GetMousePosition();
-		SGD::Vector	joystick = pInput->GetLeftJoystick(0);
-		float		stickmin = 0.250f;
-		float		mousevel = 4.0f;
-
-		if (joystick.x > stickmin)
-		mpoint.x += mousevel;
-		else if (joystick.x < stickmin * -1.0f)
-		mpoint.x -= mousevel;
-
-		if (joystick.y > stickmin)
-		mpoint.y += mousevel;
-		else if (joystick.y < stickmin * -1.0f)
-		mpoint.y -= mousevel;
-
-		if (mpoint.x < 0.0F)
-		mpoint.x = 0.0F;
-		if (mpoint.y < 0.0F)
-		mpoint.y = 0.0F;
-		if (mpoint.x > Game::GetInstance()->GetScreenWidth())
-		mpoint.x = Game::GetInstance()->GetScreenWidth();
-		if (mpoint.y > Game::GetInstance()->GetScreenHeight())
-		mpoint.y = Game::GetInstance()->GetScreenHeight();
-
-		pInput->SetMousePosition(mpoint);
-		}
-		ControllerInputCheck();
-		*/
 	}
 
 	mousePos = pInput->GetMousePosition();
-
 
 	switch (currPage)
 	{
@@ -5815,7 +5784,7 @@ void	ShopState::Render(void)
 	pGraphics->DrawTexture(m_hBackground, { 0, 0 });
 	pGraphics->DrawRectangle(SGD::Rectangle(0, 0, Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight()), { 200, 0, 0, 0 });
 
-	pGraphics->DrawTexture(Game::GetInstance()->m_hRadioImage, { 30, Game::GetInstance()->GetScreenHeight() - 215 }, {}, {}, {}, { .25f, .25f });
+	pGraphics->DrawTexture(Game::GetInstance()->m_hRadioImage, { Game::GetInstance()->GetScreenWidth() * 0.8f, Game::GetInstance()->GetScreenHeight() - 175 }, {}, {}, {}, { .25f, .25f });
 
 	stringstream moneyCount;
 	moneyCount << "$" << profile.money;
@@ -5844,11 +5813,11 @@ void	ShopState::Render(void)
 
 
 
-	
+	float buttonScale = 0.5f;
 
-	float scale = 1.0f;
-	int xOffset = 10;
-	int yOffset = 6;
+	float scale = .75f;
+	int xOffset = 5;
+	int yOffset = 3;
 
 
 	switch (currPage)
@@ -5856,8 +5825,8 @@ void	ShopState::Render(void)
 	case PISTOLS:
 #pragma region Pistols
 	{
-					pGraphics->DrawTexture(upgradeButton, { shotTab1.left, shotTab1.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-					pGraphics->DrawTexture(upgradeButton, { shotTab2.left, shotTab2.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+					pGraphics->DrawTexture(upgradeButton, { shotTab1.left, shotTab1.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+					pGraphics->DrawTexture(upgradeButton, { shotTab2.left, shotTab2.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 					
 					
 					if (currTab == 0)
@@ -5898,8 +5867,8 @@ void	ShopState::Render(void)
 						pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(103.0f, 47.0f), SGD::Size(140.0f, 86.0f)));
 
 						for (size_t i = 0; i < 3; i++)
-							pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-						pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+							pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+						pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 						if (mousePos.IsWithinRectangle(Buttons[0]))
@@ -6022,8 +5991,8 @@ void	ShopState::Render(void)
 						pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(315.0f, 560.0f), SGD::Size(180.0f, 95.0f)));
 
 						for (size_t i = 0; i < 7; i++)
-							pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-						pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+							pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+						pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 
@@ -6168,10 +6137,10 @@ void	ShopState::Render(void)
 	case SHOTGUNS:
 #pragma region Shotguns
 	{
-					 pGraphics->DrawTexture(upgradeButton, { shotTab1.left, shotTab1.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-					 pGraphics->DrawTexture(upgradeButton, { shotTab2.left, shotTab2.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-					 pGraphics->DrawTexture(upgradeButton, { shotTab3.left, shotTab3.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-					 pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+					 pGraphics->DrawTexture(upgradeButton, { shotTab1.left, shotTab1.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+					 pGraphics->DrawTexture(upgradeButton, { shotTab2.left, shotTab2.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+					 pGraphics->DrawTexture(upgradeButton, { shotTab3.left, shotTab3.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+					 pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 		
 					 ////Revolver
@@ -6227,7 +6196,7 @@ void	ShopState::Render(void)
 							   pFont->Draw(sawnOffAmmoStat.str().c_str(), { screenSize.width *.3f, Buttons[5].top }, scale, { 255, 255, 0, 0 });
 							   pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(515.0f, 575.0f), SGD::Size(240.0f, 75.0f)));
 							   for (size_t i = 0; i < 6; i++)
-								   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+								   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 
@@ -6395,7 +6364,7 @@ void	ShopState::Render(void)
 							   pFont->Draw(pumpAmmoStat.str().c_str(), { screenSize.width *.3f, Buttons[6].top }, scale, { 255, 255, 0, 0 });
 							   pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(15.0f, 225.0f), SGD::Size(218.0f, 70.0f)));
 							   for (size_t i = 0; i < 7; i++)
-								   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+								   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 							   if (mousePos.IsWithinRectangle(Buttons[0]))
@@ -6581,7 +6550,7 @@ void	ShopState::Render(void)
 							   pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(514.0f, 228.0f), SGD::Size(228.0f, 82.0f)));
 
 							   for (size_t i = 0; i < 7; i++)
-								   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+								   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 							   if (mousePos.IsWithinRectangle(Buttons[0]))
 							   {
@@ -6727,9 +6696,9 @@ void	ShopState::Render(void)
 	case SMGS:
 	{
 #pragma region SMGS
-				 pGraphics->DrawTexture(upgradeButton, { shotTab1.left, shotTab1.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-				 pGraphics->DrawTexture(upgradeButton, { shotTab2.left, shotTab2.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-				 pGraphics->DrawTexture(upgradeButton, { shotTab3.left, shotTab3.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+				 pGraphics->DrawTexture(upgradeButton, { shotTab1.left, shotTab1.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+				 pGraphics->DrawTexture(upgradeButton, { shotTab2.left, shotTab2.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+				 pGraphics->DrawTexture(upgradeButton, { shotTab3.left, shotTab3.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 		
 
 
@@ -6789,8 +6758,8 @@ void	ShopState::Render(void)
 						   pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(725.0f, 65.0f), SGD::Size(125.0f, 110.0f)));
 
 						   for (size_t i = 0; i < 6; i++)
-							   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-						   pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+							   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+						   pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 
@@ -6958,9 +6927,9 @@ void	ShopState::Render(void)
 						   pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(335.0f, 670.0f), SGD::Size(165.0f, 100.0f)));
 
 						   for (size_t i = 0; i < 6; i++)
-							   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+							   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
-						   pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+						   pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 
@@ -7126,9 +7095,9 @@ void	ShopState::Render(void)
 						   pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(315.0f, 130.0f), SGD::Size(240.0f, 90.0f)));
 
 						   for (size_t i = 0; i < 6; i++)
-							   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+							   pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
-						   pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+						   pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 						   if (mousePos.IsWithinRectangle(Buttons[0]))
 						   {
@@ -7265,9 +7234,9 @@ void	ShopState::Render(void)
 	case ASSAULT_RIFLES:
 #pragma region Assault Rifle
 	{
-						   pGraphics->DrawTexture(upgradeButton, { shotTab1.left, shotTab1.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-						   pGraphics->DrawTexture(upgradeButton, { shotTab2.left, shotTab2.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-						   pGraphics->DrawTexture(upgradeButton, { shotTab3.left, shotTab3.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+						   pGraphics->DrawTexture(upgradeButton, { shotTab1.left, shotTab1.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+						   pGraphics->DrawTexture(upgradeButton, { shotTab2.left, shotTab2.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+						   pGraphics->DrawTexture(upgradeButton, { shotTab3.left, shotTab3.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 						  
 
 						   switch (currTab)
@@ -7328,9 +7297,9 @@ void	ShopState::Render(void)
 									 pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(225.0f, 300.0f), SGD::Size(244.0f, 73.0f)));
 
 									 for (size_t i = 0; i < 7; i++)
-										 pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+										 pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
-									 pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+									 pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 									 if (mousePos.IsWithinRectangle(Buttons[0]))
@@ -7516,9 +7485,9 @@ void	ShopState::Render(void)
 									 pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(468.0f, 312.0f), SGD::Size(256.0f, 88.0f)));
 
 									 for (size_t i = 0; i < 7; i++)
-										 pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+										 pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
-									 pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+									 pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 									 if (mousePos.IsWithinRectangle(Buttons[0]))
@@ -7702,9 +7671,9 @@ void	ShopState::Render(void)
 									 pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(16.0f, 368.0f), SGD::Size(260.0f, 85.0f)));
 
 									 for (size_t i = 0; i < 7; i++)
-										 pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+										 pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
-									 pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+									 pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 
@@ -7854,9 +7823,9 @@ void	ShopState::Render(void)
 	case HEAVY:
 	{
 #pragma region Heavy
-				  pGraphics->DrawTexture(upgradeButton, { shotTab1.left, shotTab1.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-				  pGraphics->DrawTexture(upgradeButton, { shotTab2.left, shotTab2.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
-				  pGraphics->DrawTexture(upgradeButton, { shotTab3.left, shotTab3.top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+				  pGraphics->DrawTexture(upgradeButton, { shotTab1.left, shotTab1.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+				  pGraphics->DrawTexture(upgradeButton, { shotTab2.left, shotTab2.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
+				  pGraphics->DrawTexture(upgradeButton, { shotTab3.left, shotTab3.top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 				
 				  //Revolver
 				  switch (currTab)
@@ -7925,9 +7894,9 @@ void	ShopState::Render(void)
 							pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(530.0f, 400.0f), SGD::Size(230.0f, 63.0f)));
 
 							for (size_t i = 0; i < 8; i++)
-								pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+								pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
-							pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+							pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 							if (mousePos.IsWithinRectangle(Buttons[0]))
@@ -8125,9 +8094,9 @@ void	ShopState::Render(void)
 							pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(8.0f, 550.0f), SGD::Size(274.0f, 142.0f)));
 
 							for (size_t i = 0; i < 7; i++)
-								pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+								pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
-							pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+							pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 
 							if (mousePos.IsWithinRectangle(Buttons[0]))
@@ -8305,9 +8274,9 @@ void	ShopState::Render(void)
 							pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(330.0f, 455.0f), SGD::Size(265.0f, 82.0f)));
 
 							for (size_t i = 0; i < 6; i++)
-								pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+								pGraphics->DrawTexture(upgradeButton, { Buttons[i].left, Buttons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
-							pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+							pGraphics->DrawTexture(upgradeButton, { Buttons[8].left, Buttons[8].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 							if (mousePos.IsWithinRectangle(Buttons[0]))
 							{
@@ -8510,7 +8479,7 @@ void	ShopState::Render(void)
 
 
 		for (size_t i = 0; i < 8; i++)
-			pGraphics->DrawTexture(upgradeButton, { DefenseButtons[i].left, DefenseButtons[i].top }, {}, {}, { 155, 155, 155 }, { 0.75f, 0.75f });
+			pGraphics->DrawTexture(upgradeButton, { DefenseButtons[i].left, DefenseButtons[i].top }, {}, {}, { 155, 155, 155 }, { buttonScale, buttonScale });
 
 		if (sandBag.isBought == true)
 		{
@@ -11048,10 +11017,10 @@ void ShopState::DrawControllerInput(void)
 
 	//pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(103.0f, 47.0f), SGD::Size(140.0f, 86.0f)));
 
-	pFont->Draw("L1:\tPrev Page", { screenSize.width * 0.75f, screenSize.height * 0.05f }, 1.0f, { 255, 0, 0 });
-	pFont->Draw("R1:\tNext Page", { screenSize.width * 0.75f, screenSize.height * 0.10f }, 1.0f, { 255, 0, 0 });
-	pFont->Draw("Dpad-Left:\tPrev Tab", { screenSize.width * 0.75f, screenSize.height * 0.20f }, 1.0f, { 255, 0, 0 });
-	pFont->Draw("Dpad-Right:\tNext Tab", { screenSize.width * 0.75f, screenSize.height * 0.25f }, 1.0f, { 255, 0, 0 });
+	pFont->Draw("L1:\tPrev Page", { screenSize.width * 0.8f, screenSize.height * 0.05f }, .75f, { 255, 0, 0 });
+	pFont->Draw("R1:\tNext Page", { screenSize.width * 0.8f, screenSize.height * 0.10f }, .75f, { 255, 0, 0 });
+	pFont->Draw("Dpad-Left:\tPrev Tab", { screenSize.width * 0.8f, screenSize.height * 0.20f }, .75f, { 255, 0, 0 });
+	pFont->Draw("Dpad-Right:\tNext Tab", { screenSize.width * 0.8f, screenSize.height * 0.25f }, .75f, { 255, 0, 0 });
 
 
 
@@ -11064,10 +11033,10 @@ void ShopState::DrawKeyboardInput(void)
 
 	//pGraphics->DrawTextureSection(weaponsImage, { screenSize.width * .70f, screenSize.height * 0.45f }, SGD::Rectangle(SGD::Point(103.0f, 47.0f), SGD::Size(140.0f, 86.0f)));
 
-	pFont->Draw("Q:\tPrev Page", { screenSize.width * 0.7f, screenSize.height * 0.05f }, 1.0f, { 255, 0, 0 });
-	pFont->Draw("E:\tNext Page", { screenSize.width * 0.7f, screenSize.height * 0.10f }, 1.0f, { 255, 0, 0 });
-	pFont->Draw("A:\tPrev Tab", { screenSize.width * 0.7f, screenSize.height * 0.20f }, 1.0f, { 255, 0, 0 });
-	pFont->Draw("D:\tNext Tab", { screenSize.width * 0.7f, screenSize.height * 0.25f }, 1.0f, { 255, 0, 0 });
+	pFont->Draw("L1:\tPrev Page", { screenSize.width * 0.8f, screenSize.height * 0.05f }, .75f, { 255, 0, 0 });
+	pFont->Draw("R1:\tNext Page", { screenSize.width * 0.8f, screenSize.height * 0.10f }, .75f, { 255, 0, 0 });
+	pFont->Draw("Dpad-Left:\tPrev Tab", { screenSize.width * 0.8f, screenSize.height * 0.20f }, .75f, { 255, 0, 0 });
+	pFont->Draw("Dpad-Right:\tNext Tab", { screenSize.width * 0.8f, screenSize.height * 0.25f }, .75f, { 255, 0, 0 });
 
 
 

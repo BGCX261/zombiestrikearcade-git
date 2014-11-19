@@ -48,6 +48,7 @@
 	pAudio->SetVoiceVolume(Game::GetInstance()->m_hMainVoice, 35);
 
 	m_hBackgroundImage = pGraphics->LoadTexture("resource/graphics/MenuImages/emergencybroadcast.png");
+	m_hinstruct = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/MenuImages/ArcadeControlsIcons.png");
 
 	m_hEmergency = pAudio->LoadAudio("resource/audio/zombieemergency.wav");
 
@@ -97,6 +98,8 @@
 
 	// Unload assets
 	pGraphics->UnloadTexture(m_hBackgroundImage);
+	pGraphics->UnloadTexture(m_hinstruct);
+
 	//pAudio->UnloadAudio(m_hBackgroundMusic);
 
 	pAudio->UnloadAudio(m_hEmergency);
@@ -245,10 +248,10 @@
 	//pFont->Draw("Story Mode", { (width - (10 * 25 * 3.0f)) / 2, 10 }, 3.0f, { 255, 255, 255 });
 
 	// Display skip input
-	std::string output0 = SGD::InputManager::GetInstance()->IsControllerConnected(0) == false
-		? "Press 'Esc' to skip"
-		: "Press 'Start' to skip";
-	pFont->Draw(output0.c_str(), { (width - (output0.length() * 25 * 1.0f)) / 2, 100 }, 1.0f, { 0, 0, 0 });
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection(m_hinstruct, { Game::GetInstance()->GetScreenWidth() * 0.45f, Game::GetInstance()->GetScreenHeight() * 0.90f }, { 30.0f, 32.0f, 64.0f, 55.0f }, 0.0f, {}, {}, { 2.0f, 2.0f });
+	pFont->Draw("Press ", { Game::GetInstance()->GetScreenWidth() * 0.35f, Game::GetInstance()->GetScreenHeight() * 0.9f }, 1.0f, { 255, 255, 255 });
+	pFont->Draw(" to Skip ", { Game::GetInstance()->GetScreenWidth() * 0.55f, Game::GetInstance()->GetScreenHeight() * 0.9f }, 1.0f, { 255, 255, 255 });
+
 
 	/*
 	AnimationManager::GetInstance()->Render(animation, { width - 160.0f, 50 });
