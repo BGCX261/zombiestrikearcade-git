@@ -202,10 +202,10 @@ PlayerController::~PlayerController()
 
 
 	// player is walking(playerWalk) OR running(playerRun)
-	if ((pInput->IsKeyDown(SGD::Key::Shift) == true || pInput->IsButtonDown(0, 6) == true)  && m_Player->m_bIsAlive == true)
-		m_Player->m_bIsSprinting = true;
-	else if ((pInput->IsKeyDown(SGD::Key::Shift) == false || pInput->IsButtonDown(0, 6) == false) && m_Player->m_bIsAlive == true)
-		m_Player->m_bIsSprinting = false;
+	if ((pInput->IsKeyDown(SGD::Key::Shift) == true || pInput->IsButtonPressed(0, 2) == true)  && m_Player->m_bIsAlive == true)
+		m_Player->m_bIsSprinting = !m_Player->m_bIsSprinting;
+	//else if ((pInput->IsKeyDown(SGD::Key::Shift) == false || pInput->IsButtonDown(0, 6) == false) && m_Player->m_bIsAlive == true)
+	//	m_Player->m_bIsSprinting = false;
 
 
 
@@ -223,6 +223,10 @@ PlayerController::~PlayerController()
 		newVelocity += {0, 1};
 		m_Player->m_bMoving = true;
 	}
+	else
+	{
+		m_Player->m_bMoving = false;
+	}
 
 
 	// player strafes left/right
@@ -236,27 +240,31 @@ PlayerController::~PlayerController()
 		newVelocity += {1, 0};
 		m_Player->m_bMoving = true;
 	}
+	else
+	{
+		m_Player->m_bMoving = false;
+	}
 
 
 
-	 if (pInput->IsControllerConnected(0) == true)
-	 {
-		 if (pInput->GetLeftJoystick(0).y == 0 && pInput->GetLeftJoystick(0).x == 0)
-		 {
-			 //animation = "playerIdle";
-			 m_Player->m_bMoving = false;
-		 } 
-	 }
-	 else
-	 {
-		 // player not moving
-		 if ((pInput->IsKeyDown(SGD::Key::W) == false && pInput->IsKeyDown(SGD::Key::A) == false && pInput->IsKeyDown(SGD::Key::S) == false && pInput->IsKeyDown(SGD::Key::D) == false))
-		 {
-			 //animation = "playerIdle";
-			 m_Player->m_bMoving = false;
-		 }
 
-	 }
+	 //if (pInput->IsControllerConnected(0) == true)
+	 //{
+		// if (pInput->GetLeftJoystick(0).y == 0 && pInput->GetLeftJoystick(0).x == 0)
+		// {
+		//	 //animation = "playerIdle";
+		//	 m_Player->m_bMoving = false;
+		// } 
+	 //}
+	 //else
+	 //{
+		// // player not moving
+		// if ((pInput->IsKeyDown(SGD::Key::W) == false && pInput->IsKeyDown(SGD::Key::A) == false && pInput->IsKeyDown(SGD::Key::S) == false && pInput->IsKeyDown(SGD::Key::D) == false))
+		// {
+		//	 //animation = "playerIdle";
+		//	 m_Player->m_bMoving = false;
+		// }
+	 //}
 	
 	if (m_Player->IsSprinting() == true)
 		m_Player->SetVelocity(newVelocity * m_Player->GetMoveSpeed() * 2);
@@ -266,7 +274,10 @@ PlayerController::~PlayerController()
 	
 	WeaponManager* pWeaponManager = WeaponManager::GetInstance();
 
+
+
 	// selecting abilities
+	/*
 	if (pInput->IsKeyPressed(SGD::Key::N1) == true)
 		pWeaponManager->SelectWeapon(PISTOL);
 	else if (pInput->IsKeyPressed(SGD::Key::N2) == true)
@@ -277,6 +288,7 @@ PlayerController::~PlayerController()
 		pWeaponManager->SelectWeapon(ASSUALT_RIFLE);
 	else if (pInput->IsKeyPressed(SGD::Key::N5) == true)
 		pWeaponManager->SelectWeapon(SPECIAL);
+	*/
 
 
 	
@@ -285,12 +297,12 @@ PlayerController::~PlayerController()
 	{
 		if (pWeaponManager->GetSelected()->GetAutomatic())
 		{
-			if ((pInput->IsKeyDown(SGD::Key::MouseLeft) == true) || (pInput->IsButtonDown(0, 7) == true))
+			if ((pInput->IsKeyDown(SGD::Key::MouseLeft) == true) || (pInput->IsButtonDown(0, 5) == true))
 				pWeaponManager->GetSelected()->Fire(dt);
 		}
 		else
 		{
-			if ((pInput->IsKeyPressed(SGD::Key::MouseLeft) == true) || (pInput->IsButtonPressed(0, 7) == true))
+			if ((pInput->IsKeyPressed(SGD::Key::MouseLeft) == true) || (pInput->IsButtonPressed(0, 5) == true))
 				pWeaponManager->GetSelected()->Fire(dt);
 		}
 
@@ -301,7 +313,7 @@ PlayerController::~PlayerController()
 	}
 	else
 	{
-		if ((pInput->IsKeyPressed(SGD::Key::MouseLeft) == true) || (pInput->IsButtonPressed(0, 1) == true))
+		if ((pInput->IsKeyPressed(SGD::Key::MouseLeft) == true) || (pInput->IsButtonPressed(0, 5) == true))
 			m_Player->SpawnTurret();
 	}
 
@@ -309,7 +321,7 @@ PlayerController::~PlayerController()
 
 
 	// spawning turrets
-	if ((pInput->IsKeyPressed(SGD::Key::T) == true || pInput->IsButtonPressed(0, 3) == true) && m_Player->GetNumTurrets() > 0)
+	if ((pInput->IsKeyPressed(SGD::Key::T) == true || pInput->IsButtonPressed(0, 4) == true) && m_Player->GetNumTurrets() > 0)
 		m_Player->SetIsPlacingTurret(!m_Player->isPlacingTurret());
 	
 

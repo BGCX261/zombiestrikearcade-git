@@ -32,6 +32,7 @@ private:
 	bool modeChosen = false;
 	int currState = 0;
 	int		m_nCursor = 0;
+	bool	isJSmoved = false;
 
 	GamerProfile profiles[3];
 	tm times[3];

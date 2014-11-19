@@ -275,6 +275,7 @@
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 	
+	/*
 	if (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0)
 	{
 		SGD::Point	mpoint = pInput->GetMousePosition();
@@ -304,13 +305,14 @@
 
 		pInput->SetMousePosition(mpoint);
 	}
+	*/
 	
-
 	SGD::Point mousePos = pInput->GetMousePosition();
+
 
 	if (m_bIsChoiceScreen == true)
 	{
-		if (pInput->GetMouseMovement() != SGD::Vector() || (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0))
+		if (pInput->GetMouseMovement() != SGD::Vector() /*|| (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0)*/)
 		{
 			if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point(Game::GetInstance()->GetScreenWidth() / 2 - 320, Game::GetInstance()->GetScreenHeight() / 2 + 75), SGD::Size(128, 64))))
 				m_nCursor = 0;
@@ -318,28 +320,42 @@
 				m_nCursor = 1;
 		}
 
-		if (pInput->IsKeyPressed(SGD::Key::RightArrow) == true || pInput->IsDPadPressed(0, SGD::DPad::Right) == true || pInput->IsKeyPressed(SGD::Key::D) == true)
+		if (pInput->IsKeyPressed(SGD::Key::RightArrow) == true || pInput->IsDPadPressed(0, SGD::DPad::Right) == true || pInput->IsKeyPressed(SGD::Key::D) == true || pInput->IsButtonPressed(0, 1) == true)
 		{
 			m_nCursor++;
 
 			if (m_nCursor > 1)
-			{
 				m_nCursor = 0;
-			}
 		}
-
-
-		if (pInput->IsKeyPressed(SGD::Key::LeftArrow) == true || pInput->IsDPadPressed(0, SGD::DPad::Left) == true || pInput->IsKeyPressed(SGD::Key::A) == true)
+		else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) == true || pInput->IsDPadPressed(0, SGD::DPad::Left) == true || pInput->IsKeyPressed(SGD::Key::A) == true || pInput->IsButtonPressed(0, 0) == true)
 		{
 			m_nCursor--;
 
 			if (m_nCursor < 0)
-			{
 				m_nCursor = 1;
-			}
 		}
 
-		if (pInput->IsKeyPressed(SGD::Key::Enter) == true || pInput->IsButtonReleased(0, 1) == true || pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
+
+		// Joystick input
+		if (pInput->GetLeftJoystick(0).x < 0)
+		{
+			if (isJSmoved == false)
+				m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : 2 - 1;
+			isJSmoved = true;
+		}
+		else if (pInput->GetLeftJoystick(0).x > 0)
+		{
+			if (isJSmoved == false)
+				m_nCursor = m_nCursor + 1 < 2 ? m_nCursor + 1 : 0;
+			isJSmoved = true;
+		}
+		else
+		{
+			isJSmoved = false;
+		}
+
+
+		if (pInput->IsKeyPressed(SGD::Key::Enter) == true || pInput->IsButtonPressed(0, 3) == true || pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
 		{
 			switch (m_nCursor)
 			{
@@ -376,32 +392,43 @@
 		SGD::Point mousePos = pInput->GetMousePosition();
 
 		if (pInput->IsKeyPressed(SGD::Key::E) == true || pInput->IsDPadPressed(0, SGD::DPad::Left) == true || pInput->IsButtonPressed(0, 1) == true)
-		{
-			m_nCurPage++;
-		}
-
-		if (pInput->IsKeyPressed(SGD::Key::Q) == true || pInput->IsDPadPressed(0, SGD::DPad::Right) == true || pInput->IsButtonPressed(0, 2) == true)
-		{
 			m_nCurPage--;
+		else if (pInput->IsKeyPressed(SGD::Key::Q) == true || pInput->IsDPadPressed(0, SGD::DPad::Right) == true || pInput->IsButtonPressed(0, 0) == true)
+			m_nCurPage++;
+
+
+		//if (pInput->IsKeyPressed(SGD::Key::P) == true || pInput->IsButtonPressed(0, 2) == true)
+		//	m_bIsTutorial = !m_bIsTutorial;
+
+
+		// Joystick input
+		if (pInput->GetLeftJoystick(0).y < 0)
+		{
+			if (isJSmoved == false)
+				m_nCurPage--;
+			isJSmoved = true;
+		}
+		else if (pInput->GetLeftJoystick(0).y > 0)
+		{
+			if (isJSmoved == false)
+				m_nCurPage++;
+			isJSmoved = true;
+		}
+		else
+		{
+			isJSmoved = false;
 		}
 
-		if (pInput->IsKeyPressed(SGD::Key::P) == true)
-			m_bIsTutorial = !m_bIsTutorial;
 
 		if (mousePos.IsWithinRectangle(SGD::Rectangle(tutRect.left + 105.0f, tutRect.bottom - 10 - 35, tutRect.left + 185.0f, tutRect.bottom - 10)))
 		{
 			if (pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
-			{
 				m_nCurPage--;
-			}
 		}
-
 		if (mousePos.IsWithinRectangle(SGD::Rectangle(tutRect.right - 155.0f, tutRect.bottom - 10 - 35, tutRect.right - 70.0f, tutRect.bottom - 10)))
 		{
 			if (pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
-			{
 				m_nCurPage++;
-			}
 		}
 	}
 
@@ -410,7 +437,7 @@
 		/**********************************************************/
 		// Press Escape to enter Pause menu
 		/**********************************************************/
-		if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 9) == true)
+		if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 1) == true)
 		{
 			SGD::Event msg("PAUSE");
 			msg.SendEventNow();
@@ -435,7 +462,7 @@
 				pAudio->StopAudio(Game::GetInstance()->storyMusic);
 		}
 
-		if (pInput->IsKeyPressed(SGD::Key::B) == true || pInput->IsButtonPressed(0, 8) == true)
+		if (pInput->IsKeyPressed(SGD::Key::B) == true || pInput->IsButtonPressed(0, 6) == true)
 		{
 			SGD::Event msg("PAUSE");
 			msg.SendEventNow();
@@ -444,13 +471,13 @@
 			Game::GetInstance()->AddState(ShopState::GetInstance());
 		}
 
-		if (pInput->IsKeyPressed(SGD::Key::P) == true)
-		{
-			m_bIsTutorial = !m_bIsTutorial;
-			m_nCurPage = 1;
-		}
+		//if (pInput->IsKeyPressed(SGD::Key::P) == true || pInput->IsButtonPressed(0, 2) == true)
+		//{
+		//	m_bIsTutorial = !m_bIsTutorial;
+		//	m_nCurPage = 1;
+		//}
 	}
-	if (pInput->IsKeyPressed(SGD::Key::I) == true)
+	if (pInput->IsKeyPressed(SGD::Key::I) == true || pInput->IsButtonPressed(0, 3) == true)
 	{
 		m_bIsTutorial = !m_bIsTutorial;
 	}

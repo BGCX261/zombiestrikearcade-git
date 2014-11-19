@@ -104,7 +104,7 @@
 
 	SGD::Point mousePos = pInput->GetMousePosition();
 	// Press Escape to quit
-	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 2) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 6) == true)
 	{
 		SGD::Event msg("UNPAUSE");
 		msg.SendEventNow();
@@ -112,10 +112,10 @@
 
 		return true;
 	}
-	if (pInput->GetMouseMovement() != SGD::Vector() || (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0))
-	{
-		
 
+
+	if (pInput->GetMouseMovement() != SGD::Vector() /*|| (pInput->GetLeftJoystick(0).x != 0 || pInput->GetLeftJoystick(0).y != 0)*/)
+	{
 		if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point((width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + (100.0f * 0) + 100.0f), SGD::Size(256, 64))))
 			m_nCursor = 0;
 		else if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point((width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + (100.0f * 1) + 100.0f), SGD::Size(256, 64))))
@@ -124,16 +124,15 @@
 			m_nCursor = 2;
 		else if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point((width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + (100.0f * 3) + 100.0f), SGD::Size(256, 64))))
 			m_nCursor = 3;
+
 		if (HTPGameState::GetInstance()->GetIsCurrState() == true)
 		{
 			if (mousePos.IsWithinRectangle(SGD::Rectangle(SGD::Point((width * 0.25f - (2 * 32 * scale)) / 2, (height * 0.25F) + (100.0f * 4) + 100.0f), SGD::Size(256, 64))))
 				m_nCursor = 4;
-
 		}
-		
-
 	}
 
+	/*
 	if (HTPGameState::GetInstance()->GetIsCurrState() == false)
 	{
 		if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true)
@@ -141,23 +140,63 @@
 		else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true)
 			m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
 	}
-	else if (HTPGameState::GetInstance()->GetIsCurrState() == false)
+	else
+	*/
+	if (HTPGameState::GetInstance()->GetIsCurrState() == false)
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true)
+		if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true || pInput->IsButtonPressed(0, 0) == true)
 			m_nCursor = m_nCursor + 1 < NUM_CHOICES ? m_nCursor + 1 : 0;
-		else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true)
+		else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true || pInput->IsButtonPressed(0, 1) == true)
 			m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
+
+
+		// Joystick input
+		if (pInput->GetLeftJoystick(0).y < 0)
+		{
+			if (isJSmoved == false)
+				m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : NUM_CHOICES - 1;
+			isJSmoved = true;
+		}
+		else if (pInput->GetLeftJoystick(0).y > 0)
+		{
+			if (isJSmoved == false)
+				m_nCursor = m_nCursor + 1 < NUM_CHOICES ? m_nCursor + 1 : 0;
+			isJSmoved = true;
+		}
+		else
+		{
+			isJSmoved = false;
+		}
 	}
 	else
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true)
+		if (pInput->IsKeyPressed(SGD::Key::Down) == true || pInput->IsKeyPressed(SGD::Key::S) == true || pInput->IsDPadPressed(0, SGD::DPad::Down) == true || pInput->IsButtonPressed(0, 0) == true)
 			m_nCursor = m_nCursor + 1 < (NUM_CHOICES + 1) ? m_nCursor + 1 : 0;
-		else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true)
+		else if (pInput->IsKeyPressed(SGD::Key::Up) == true || pInput->IsKeyPressed(SGD::Key::W) == true || pInput->IsDPadPressed(0, SGD::DPad::Up) == true || pInput->IsButtonPressed(0, 1) == true)
 			m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : (NUM_CHOICES + 1) - 1;
+
+
+		// Joystick input
+		if (pInput->GetLeftJoystick(0).y < 0)
+		{
+			if (isJSmoved == false)
+				m_nCursor = m_nCursor - 1 >= 0 ? m_nCursor - 1 : (NUM_CHOICES + 1) - 1;
+			isJSmoved = true;
+		}
+		else if (pInput->GetLeftJoystick(0).y > 0)
+		{
+			if (isJSmoved == false)
+				m_nCursor = m_nCursor + 1 < (NUM_CHOICES + 1) ? m_nCursor + 1 : 0;
+			isJSmoved = true;
+		}
+		else
+		{
+			isJSmoved = false;
+		}
 	}
 
 
-	if (pInput->IsKeyPressed(SGD::Key::Enter) == true || pInput->IsButtonPressed(0, 1) == true || pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Enter) == true || pInput->IsButtonPressed(0, 3) == true || pInput->IsKeyReleased(SGD::Key::MouseLeft) == true)
 	{
 		/*
 		switch (m_nCursor)
@@ -209,7 +248,6 @@
 			break;
 		}
 		*/
-
 
 		if (HTPGameState::GetInstance()->GetChoiceScreen() == true)
 		{

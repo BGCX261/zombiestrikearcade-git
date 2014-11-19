@@ -113,7 +113,7 @@
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 	// Press Escape to quit
-	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 9) == true || pInput->IsButtonPressed(0, 2) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 3) == true || pInput->IsButtonPressed(0, 6) == true)
 	{
 
 		//COMMENT IN WHEN AUDIO ADDED

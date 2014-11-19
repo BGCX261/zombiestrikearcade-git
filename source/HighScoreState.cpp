@@ -107,7 +107,7 @@
 
 
 	// Select an option?
-	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 2) == true)
+	if (pInput->IsKeyPressed(SGD::Key::Escape) == true || pInput->IsButtonPressed(0, 6) == true)
 	{
 		Game::GetInstance()->RemoveState();
 

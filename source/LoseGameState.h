@@ -37,6 +37,7 @@ private:
 	// Cursor Index
 	int		m_nCursor		= 0;
 	bool scoreGiven = false;
+	bool	isJSmoved = false;
 	std::string initials;
 
 	SGD::Point mousePos = SGD::Point(0,0);
