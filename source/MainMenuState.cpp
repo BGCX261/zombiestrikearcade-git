@@ -16,6 +16,8 @@
 #include "ShopState.h"
 #include "IntroState.h"
 #include "HTPGameState.h"
+#include "WinGameState.h"
+#include "LoseGameState.h"
 
 #include "../SGD Wrappers/SGD_EventManager.h"
 
@@ -47,8 +49,8 @@
 	selected = false;
 	//pInput->CheckForNewControllers();
 
-	starting_x = Game::GetInstance()->GetScreenWidth() * .10f;
-	starting_y = Game::GetInstance()->GetScreenHeight() * .2f;
+	starting_x = Game::GetInstance()->GetScreenWidth() * .04f;
+	starting_y = Game::GetInstance()->GetScreenHeight() * .4f;
 
 	vertical_offset = Game::GetInstance()->GetScreenHeight() * 0.1f;
 	// Load assets
@@ -425,12 +427,13 @@
 
 
 	// Draw the background image
-	pGraphics->DrawTexture(m_hBackgroundImage, { 0, 0 });
+	pGraphics->DrawTexture(m_hBackgroundImage, { -15, 0 }, 0, {}, {}, { .7f, .75f });
 
 	if (lTrans > 0)
 	{
-		pGraphics->DrawTexture(m_hLightning, { 375, 0 }, 0.0f, {}, { 100, 200, 200, 200 }, { -1.0f, .5f });
-		pGraphics->DrawTexture(m_hLightning, { Game::GetInstance()->GetScreenWidth() * .65f, 0 }, 0.0f, {}, { 100, 200, 200, 200 }, { 1.0f, .5f });
+		pGraphics->DrawTexture(m_hLightning, { Game::GetInstance()->GetScreenWidth() * .3f, 0 }, 0.0f, {}, { 75, 200, 200, 200 }, { -.5f, .4f });
+		pGraphics->DrawTexture(m_hLightning, { Game::GetInstance()->GetScreenWidth() * .7f, 0 }, 0.0f, {}, { 75, 200, 200, 200 }, { .5f, .4f });
+
 	}
 
 	SGD::Color sColor(trans, 100, 0, 0);
@@ -457,7 +460,7 @@
 	float screenWidth = Game::GetInstance()->GetScreenWidth();
 	float screenHeight = Game::GetInstance()->GetScreenHeight();
 
-	float titlescale = .75f;
+	float titlescale = .5f;
 	pGraphics->DrawTexture(m_hTitleImage, { screenWidth * 0.2f, -(screenHeight * 0.09375f)* titlescale }, 0.0f, {}, { 200, 150, 0, 150 }, { titlescale, titlescale });
 
 	// Display the menu options centered at 1x scale

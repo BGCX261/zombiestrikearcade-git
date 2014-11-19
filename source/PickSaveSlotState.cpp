@@ -307,7 +307,7 @@ void PickSaveSlotState::Render(void)
 
 	// Display the game title centered at 4x scale
 	const wchar_t* title1 = L"Save Slots";	// 10
-	pFont->Draw(title1, { (width - (10 * 40)) / 2, 100 }, 2.5f, { 255, 255, 255 });
+	pFont->Draw(title1, { (width - (10 * 40)) / 2, 50 }, 2.5f, { 255, 255, 255 });
 
 
 
@@ -436,44 +436,44 @@ void PickSaveSlotState::Render(void)
 		{
 		case 0:
 			pFont->Draw(save1String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE1) },			// 300
-				1.25f, { 255, 255, 255, 255 });
+				1.0f, { 255, 255, 255, 255 });
 			pFont->Draw(save2String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE2) },			// 300
-				1.25f, { 255, 0, 0 });
+				1.0f, { 255, 0, 0 });
 			pFont->Draw(save3String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE3) },			// 350
-				1.25f, { 255, 0, 0 });
+				1.0f, { 255, 0, 0 });
 
 			pFont->Draw("Back", { (width - (4 * 32)) / 2, starting_y + (offset * EXIT_2) },			// 450
 				1.75f, { 255, 0, 0 });
 			break;
 		case 1:
-			pFont->Draw(save1String.str().c_str(), { (width - (10 * 32)) / 2, starting_y + (offset * SAVE1) },			// 300
-				1.25f, { 255, 0, 0 });
+			pFont->Draw(save1String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE1) },			// 300
+				1.0f, { 255, 0, 0 });
 			pFont->Draw(save2String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE2) },			// 300
-				1.25f, { 255, 255, 255, 255 });
+				1.0f, { 255, 255, 255, 255 });
 			pFont->Draw(save3String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE3) },			// 350
-				1.25f, { 255, 0, 0 });
+				1.0f, { 255, 0, 0 });
 
 			pFont->Draw("Back", { (width - (4 * 32)) / 2, starting_y + (offset * EXIT_2) },			// 450
 				1.75f, { 255, 0, 0 });
 			break;
 		case 2:
-			pFont->Draw(save1String.str().c_str(), { (width - (10 * 32)) / 2, starting_y + (offset * SAVE1) },			// 300
-				1.25f, { 255, 0, 0 });
+			pFont->Draw(save1String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE1) },			// 300
+				1.0f, { 255, 0, 0 });
 			pFont->Draw(save2String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE2) },			// 300
-				1.25f, { 255, 0, 0 });
+				1.0f, { 255, 0, 0 });
 			pFont->Draw(save3String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE3) },			// 350
-				1.25f, { 255, 255, 255, 255 });
+				1.0f, { 255, 255, 255, 255 });
 
 			pFont->Draw("Back", { (width - (4 * 32)) / 2, starting_y + (offset * EXIT_2) },			// 450
 				1.75f, { 255, 0, 0 });
 			break;
 		case 3:
-			pFont->Draw(save1String.str().c_str(), { (width - (10 * 32)) / 2, starting_y + (offset * SAVE1) },			// 300
-				1.25f, { 255, 0, 0 });
+			pFont->Draw(save1String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE1) },			// 300
+				1.0f, { 255, 0, 0 });
 			pFont->Draw(save2String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE2) },			// 300
-				1.25f, { 255, 0, 0 });
+				1.0f, { 255, 0, 0 });
 			pFont->Draw(save3String.str().c_str(), { (width - (11 * 32)) / 2, starting_y + (offset * SAVE3) },			// 350
-				1.25f, { 255, 0, 0 });
+				1.0f, { 255, 0, 0 });
 
 			pFont->Draw("Back", { (width - (4 * 32)) / 2, starting_y + (offset * EXIT_2) },			// 450
 				1.75f, { 255, 255, 255, 255 });

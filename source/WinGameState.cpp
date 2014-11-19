@@ -173,9 +173,9 @@
 
 	float width = Game::GetInstance()->GetScreenWidth();
 	float height = Game::GetInstance()->GetScreenHeight();
-	float scale = 1.25f;
+	float scale = 1.0f;
 	// Draw the background image
-	pGraphics->DrawTexture(m_hBackgroundImage, {width * 0.1f , -60 });
+	pGraphics->DrawTexture(m_hBackgroundImage, { width * 0.2f, 0 }, 0.0f, {}, {}, { .5f, .5f });
 
 
 	// Use the game's font
@@ -183,16 +183,16 @@
 
 	
 
-	pFont->Draw("Play Again?", { (width - (11 * 20* scale)) / 2, height * 0.5F }, scale, { 255, 255, 0 });
-	pFont->Draw("YES", { (width - (3 * 32 * scale)) / 2, (height * 0.5F) + 100.0f }, scale, { 0, 255, 0 });
-	pFont->Draw("NO", { (width - (2 * 32 * scale)) / 2, (height * 0.5F) + 200.0f }, scale, { 0, 255, 0 });
+	pFont->Draw("Play Again?", { (width - (11 * 20* scale)) / 2 + 50, height * 0.5F }, scale, { 255, 255, 0 });
+	pFont->Draw("YES", { (width - (3 * 32 * scale)) / 2 + 50, (height * 0.5F) + 100.0f }, scale, { 0, 255, 0 });
+	pFont->Draw("NO", { (width - (2 * 32 * scale)) / 2 + 50, (height * 0.5F) + 200.0f }, scale, { 0, 255, 0 });
 
 
 	if (m_nCursor == 0)
-		pGraphics->DrawTexture(m_hReticleImage, { width * 0.5f - 125.0f, (height * 0.5F) + 100.0f }, 0.0F, {}, { 0, 255, 0 }, { .5f, .5f });
+		pGraphics->DrawTexture(m_hReticleImage, { width * 0.5f - 45.0f, (height * 0.5F) + 100.0f }, 0.0F, {}, { 0, 255, 0 }, { .5f, .5f });
 
 	else
-		pGraphics->DrawTexture(m_hReticleImage, { width * 0.5f - 125.0f, (height * 0.5F) + 200.0f }, 0.0F, {}, { 0, 255, 0 }, { .5f, .5f });
+		pGraphics->DrawTexture(m_hReticleImage, { width * 0.5f - 45.0f, (height * 0.5F) + 200.0f }, 0.0F, {}, { 0, 255, 0 }, { .5f, .5f });
 
 	// Draw the reticle
 	SGD::Point	retpos = SGD::InputManager::GetInstance()->GetMousePosition();
