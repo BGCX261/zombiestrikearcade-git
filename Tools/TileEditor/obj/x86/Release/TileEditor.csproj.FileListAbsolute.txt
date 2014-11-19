@@ -1,0 +1,10 @@
+C:\Users\fullsail\Desktop\ZombieStrike\Tools\TileEditor\bin\x86\Release\TileEditor.exe.config
+C:\Users\fullsail\Desktop\ZombieStrike\Tools\TileEditor\bin\x86\Release\TileEditor.exe
+C:\Users\fullsail\Desktop\ZombieStrike\Tools\TileEditor\bin\x86\Release\TileEditor.pdb
+C:\Users\fullsail\Desktop\ZombieStrike\Tools\TileEditor\obj\x86\Release\TileEditor.csprojResolveAssemblyReference.cache
+C:\Users\fullsail\Desktop\ZombieStrike\Tools\TileEditor\obj\x86\Release\TileEditor.Form1.resources
+C:\Users\fullsail\Desktop\ZombieStrike\Tools\TileEditor\obj\x86\Release\TileEditor.ModalControl.resources
+C:\Users\fullsail\Desktop\ZombieStrike\Tools\TileEditor\obj\x86\Release\TileEditor.Properties.Resources.resources
+C:\Users\fullsail\Desktop\ZombieStrike\Tools\TileEditor\obj\x86\Release\TileEditor.csproj.GenerateResource.Cache
+C:\Users\fullsail\Desktop\ZombieStrike\Tools\TileEditor\obj\x86\Release\TileEditor.exe
+C:\Users\fullsail\Desktop\ZombieStrike\Tools\TileEditor\obj\x86\Release\TileEditor.pdb
